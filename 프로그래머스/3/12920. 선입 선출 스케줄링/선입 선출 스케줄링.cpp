@@ -3,11 +3,13 @@
 using namespace std;
 
 bool check(int mid, int n, vector<int>& cores){
-    long long cnt = 0;
+    int cnt = 0;
     
     for(int i = 0; i < cores.size(); i++){
         cnt += (mid) / cores[i];
         cnt += (mid % cores[i] != 0);
+        
+        if(cnt >= n) return false;
     }
     
     return cnt < n;
