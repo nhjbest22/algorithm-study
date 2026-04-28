@@ -2,25 +2,21 @@
 
 using namespace std;
 
+#define rep(i,a,b) for(int i = a; i < b; i++)
+
 vector<int> solution(int brown, int yellow) {
-    vector<int> answer;
-    // 가로: y, 세로: x y >= x >= 3
-    // 갈색: xy - (x-2)*(y-2) = xy - (xy - 2x - 2y + 4) = 2x + 2y - 4 <= 5000
-    // 3 + y <= x + y <= 2502
-    // 노란색: (x-2)*(y-2)
+    // 가로 - 1: y, 세로 - 1: x
+    // 
     
-    // return {y, x}
+    int x = 2;
+    int y = brown/2 - x;
     
-    for(int y = 2499; y >= 3 ;y--){
-        int x = (brown + 4 - 2*y) / 2;
+    while(1){
+        if((x-1)*(y-1) == yellow) return {y + 1, x + 1};
         
-        if (yellow != (x-2)*(y-2)) continue;
-        
-        answer.push_back(max(x, y));
-        answer.push_back(min(x, y));
-        break;
+        x++;
+        y--;
     }
     
-    
-    return answer;
+    return {};
 }
