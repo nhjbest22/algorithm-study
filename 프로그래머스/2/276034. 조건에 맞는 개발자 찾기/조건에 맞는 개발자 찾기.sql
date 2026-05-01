@@ -1,28 +1,14 @@
 SELECT
-    ID,
-    EMAIL,
-    FIRST_NAME,
-    LAST_NAME
+    DISTINCT(D.ID),
+    D.EMAIL,
+    D.FIRST_NAME,
+    D.LAST_NAME
 FROM 
-    DEVELOPERS
+    DEVELOPERS  D
+JOIN
+    SKILLCODES  S
+ON (D.SKILL_CODE & S.CODE)
 WHERE
-    FLOOR(SKILL_CODE / (
-        SELECT 
-            CODE
-        FROM
-            SKILLCODES
-        WHERE 
-            NAME = 'C#'
-    )) % 2 = 1
-    OR
-    FLOOR(SKILL_CODE / (
-        SELECT 
-            CODE
-        FROM
-            SKILLCODES
-        WHERE 
-            NAME = 'Python'
-    )) % 2 = 1
+    S.NAME IN ('C#', 'Python')
 ORDER BY 
-    ID ASC;
-
+    D.ID ASC;
