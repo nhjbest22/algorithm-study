@@ -1,16 +1,31 @@
+-- SELECT
+--     NAME,
+--     DATETIME
+-- FROM
+--     ANIMAL_INS
+-- WHERE
+--     ANIMAL_ID NOT IN
+--         (
+--             SELECT
+--                 ANIMAL_ID
+--             FROM
+--                 ANIMAL_OUTS
+--         )
+-- ORDER BY 
+--     DATETIME ASC
+-- FETCH FIRST 3 ROWS ONLY;
+
 SELECT
-    NAME,
-    DATETIME
+    F.NAME,
+    F.DATETIME
 FROM
-    ANIMAL_INS
+    ANIMAL_INS F
+LEFT JOIN
+    ANIMAL_OUTS S
+ON
+    F.ANIMAL_ID = S.ANIMAL_ID
 WHERE
-    ANIMAL_ID NOT IN
-        (
-            SELECT
-                ANIMAL_ID
-            FROM
-                ANIMAL_OUTS
-        )
-ORDER BY 
-    DATETIME ASC
+    S.ANIMAL_ID IS NULL
+ORDER BY
+    F.DATETIME ASC
 FETCH FIRST 3 ROWS ONLY;
