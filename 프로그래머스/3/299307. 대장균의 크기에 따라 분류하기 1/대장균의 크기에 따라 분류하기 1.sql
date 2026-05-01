@@ -1,15 +1,10 @@
 SELECT
     ID,
-    IF(SIZE_OF_COLONY <= 100, 
-       'LOW', 
-       (
-           IF(SIZE_OF_COLONY <= 1000, 
-           'MEDIUM',
-           'HIGH'
-          )
-       )
-      ) 
-    AS SIZE
+    CASE 
+        WHEN SIZE_OF_COLONY <= 100 THEN 'LOW'
+        WHEN SIZE_OF_COLONY <= 1000 THEN 'MEDIUM'
+        ELSE 'HIGH'
+    END AS SIZE
 FROM
     ECOLI_DATA
 ORDER BY
