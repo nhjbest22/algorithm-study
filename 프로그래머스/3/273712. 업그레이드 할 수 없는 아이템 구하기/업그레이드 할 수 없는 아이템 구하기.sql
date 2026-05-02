@@ -3,16 +3,16 @@ SELECT
     ITEM_NAME,
     RARITY
 FROM
-    ITEM_INFO
+    ITEM_INFO F
 WHERE
-    ITEM_ID NOT IN
+    NOT EXISTS
         (
             SELECT
-                PARENT_ITEM_ID
+                1
             FROM
-                ITEM_TREE
+                ITEM_TREE S
             WHERE
-                PARENT_ITEM_ID IS NOT NULL
+                F.ITEM_ID = S.PARENT_ITEM_ID
         )
 ORDER BY
     ITEM_ID DESC;
