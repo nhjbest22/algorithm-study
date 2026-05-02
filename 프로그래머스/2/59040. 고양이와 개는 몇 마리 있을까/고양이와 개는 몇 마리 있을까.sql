@@ -5,9 +5,7 @@ SELECT
 FROM
     ANIMAL_INS
 WHERE
-    ANIMAL_TYPE = 'Cat'
-    OR
-    ANIMAL_TYPE = 'Dog'
+    ANIMAL_TYPE IN ('Cat', 'Dog')
 GROUP BY
     ANIMAL_TYPE
 ORDER BY
