@@ -4,12 +4,6 @@ using namespace std;
 
 int solution(vector<int> order) {
     int answer = 0;
-    // 4, 3, 1, 2, 5
-    // 1, 2, 3 보관
-    // 4 올려둠
-    // 3 빼서 올려둠
-    // 
-    
     int N = order.size();
     stack<int> s;
     int cur = 0;
