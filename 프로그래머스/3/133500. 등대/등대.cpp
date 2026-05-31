@@ -2,42 +2,56 @@
 
 using namespace std;
 
+int par[100'005];
+int in[100'005];
+
 vector<int> adj[100'005];
+bool is_on[100'005];
+int ans;
 
-int dp[100'005][2];
-
-int dfs(int par, int cur, bool state){
-    if(dp[cur][state] != -1) 
-        return dp[cur][state];
+void dfs(int pre,int cur){
+    par[cur] = pre;
+    in[cur] = adj[cur].size() - 1;
     
-    dp[cur][state] = state;
-    
-    for(auto& nxt: adj[cur]){
-        if(nxt == par) continue;
+    for(auto nxt: adj[cur]){
+        if(nxt == pre) continue;
         
-        dp[cur][state] += (
-            state 
-            ? min(dfs(cur, nxt, false), dfs(cur, nxt, true)) 
-            : dfs(cur, nxt, true)
-        );
+        dfs(cur, nxt);
     }
-    
-    return dp[cur][state];
 }
 
 int solution(int n, vector<vector<int>> lighthouse) {
     int E = lighthouse.size();
     int V = E + 1;
-
-    for(auto e: lighthouse){
-        auto u = e[0], v = e[1];
+    
+    for(auto& e: lighthouse){
+        int u = e[0], v= e[1];
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
+
+    in[1] = adj[1].size();
     
-    fill(&dp[0][0], &dp[0][0] + 100'005*2, -1);
-    dfs(0, 1, false); 
-    dfs(0, 1, true);
+    for(auto nxt: adj[1]) dfs(1, nxt);
     
-    return min(dp[1][false], dp[1][true]);
+    queue<int> Q;
+    for(int i = 1; i <= V; i++) if(!in[i]) Q.push(i);
+    
+    while(!Q.empty()){
+        auto cur = Q.front();
+        Q.pop();
+        
+        int pre = par[cur];
+        
+        if(cur == 1) continue;
+        if(!is_on[cur] && !is_on[pre]){
+            ans++;
+            is_on[pre] = true;
+        }
+        
+        in[pre]--;
+        if(!in[pre]) Q.push(pre);
+    }
+    
+    return ans;
 }
