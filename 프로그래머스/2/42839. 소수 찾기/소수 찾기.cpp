@@ -5,31 +5,8 @@ using namespace std;
 #define visit VISIT
 
 const int MAX = 10'000'000;
-
 bool isPrime[MAX + 5];
-bool isUsed[MAX + 5];
-int ans;
 
-bool visit[10];
-
-void backtrack(const string& numbers, int cur, int len){
-    if(isPrime[cur] && !isUsed[cur]){
-        isUsed[cur] = true;
-        ans++;
-    }
-    
-    if(len == numbers.size()) return;
-
-    for(int i = 0; i < numbers.size(); i++){
-        if(visit[i]) continue;
-        
-        visit[i] = true;
-        int nxt = numbers[i] - '0';
-        backtrack(numbers, 10*cur + nxt, len + 1);
-        visit[i] = false;
-    }
-    
-}
 
 int solution(string numbers) {
     fill(isPrime, isPrime + MAX + 5, true);
@@ -42,7 +19,19 @@ int solution(string numbers) {
         }
     }
     
-    backtrack(numbers, 0, 0);
+    set<int> s;
     
-    return ans;
+    sort(numbers.begin(), numbers.end());
+    do{
+        for(int i = 1; i <= numbers.size(); i++){
+            int num = stoi(numbers.substr(0, i));
+            
+            if(!isPrime[num]) continue;
+            
+            s.insert(num);
+        }
+    }while(next_permutation(numbers.begin(), numbers.end()));
+    
+    
+    return s.size();
 }
