@@ -36,6 +36,7 @@ public:
 
         for(int i = 0; i < M; i++){
             for(int j = 0; j < N; j++){
+                if(ans) return true;
                 if(board[i][j] != word[0]) continue;
 
                 VISIT[i][j] = 1;
