@@ -34,36 +34,6 @@ public:
         int M = board.size(), N = board[0].size();
         ans = false;
 
-        // queue<pair<int, int>> Q;
-
-        // for(int i = 0; i < M; i++){
-        //     for(int j = 0; j < N; j++){
-        //         if(board[i][j] != word[0]) continue;
-
-        //         fill(&VISIT[0][0], &VISIT[0][0] + 10*10, 0);
-
-        //         Q.push({i, j});
-        //         VISIT[i][j] = 1;
-
-        //         while(!Q.empty()){
-        //             auto [curX, curY] = Q.front();
-        //             Q.pop();
-
-        //             if(VISIT[curX][curY] == word.size()) return true;
-
-        //             int len = VISIT[curX][curY];
-
-        //             for(int dir = 0; dir < 4; dir++){
-        //                 int nxtX = curX + dx[dir];
-        //                 int nxtY = curY + dy[dir];
-
-        //                 if(nxtX < 0 || nxtX >= M || nxtY <0 || nxtY >= N) continue;
-
-        //             }
-        //         }
-        //     }
-        // }
-
         for(int i = 0; i < M; i++){
             for(int j = 0; j < N; j++){
                 if(board[i][j] != word[0]) continue;
