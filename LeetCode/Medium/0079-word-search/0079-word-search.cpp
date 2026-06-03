@@ -6,7 +6,7 @@ public:
     int VISIT[10][10];
     bool ans;
 
-    void backtrack(vector<vector<char>>& board, pair<int, int> cur, string& word, int M, int N){
+    void backtrack(vector<vector<char>>& board, pair<int, int> cur, string& word, const int& M, const int& N){
         int len = VISIT[cur.first][cur.second];
         
         if(len == word.size()){
