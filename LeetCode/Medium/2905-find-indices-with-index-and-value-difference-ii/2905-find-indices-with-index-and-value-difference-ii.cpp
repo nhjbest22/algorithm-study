@@ -1,18 +1,23 @@
 class Solution {
 public:
+    int diff(pair<int, int> a, pair<int, int>& b){
+        return abs(a.first - b.first);
+    }
+
     vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
         int en = indexDifference;
         int st = 0;
 
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> minPQ;
-        priority_queue<pair<int, int>> maxPQ;
+        pair<int, int> MAX = {-1, -1}, MIN = {INT32_MAX, INT32_MAX};
 
         while(en < nums.size()){
-            minPQ.push({nums[st], st});
-            maxPQ.push({nums[st], st});
+            pair<int, int> cur = {nums[st], st};
 
-            if(abs(minPQ.top().first - nums[en]) >= valueDifference) return {minPQ.top().second, en};
-            if(abs(maxPQ.top().first - nums[en]) >= valueDifference) return {maxPQ.top().second, en};
+            MAX = max(MAX, cur);
+            MIN = min(MIN, cur);
+
+            if(diff({nums[en], en}, MAX) >= valueDifference) return {en, MAX.second};
+            if(diff({nums[en], en}, MIN) >= valueDifference) return {en, MIN.second};
 
 
             st++;
