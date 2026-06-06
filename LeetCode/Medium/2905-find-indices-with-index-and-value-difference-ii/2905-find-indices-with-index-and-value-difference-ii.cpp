@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int diff(pair<int, int> a, pair<int, int>& b){
+    int diff(pair<int, int>& a, pair<int, int>& b){
         return abs(a.first - b.first);
     }
 
@@ -11,13 +11,14 @@ public:
         pair<int, int> MAX = {-1, -1}, MIN = {INT32_MAX, INT32_MAX};
 
         while(en < nums.size()){
-            pair<int, int> cur = {nums[st], st};
+            pair<int, int> prev = {nums[st], st};
+            pair<int, int> cur = {nums[en], en};
 
-            MAX = max(MAX, cur);
-            MIN = min(MIN, cur);
+            MAX = max(MAX, prev);
+            MIN = min(MIN, prev);
 
-            if(diff({nums[en], en}, MAX) >= valueDifference) return {en, MAX.second};
-            if(diff({nums[en], en}, MIN) >= valueDifference) return {en, MIN.second};
+            if(diff(cur, MAX) >= valueDifference) return {en, MAX.second};
+            if(diff(cur, MIN) >= valueDifference) return {en, MIN.second};
 
 
             st++;
