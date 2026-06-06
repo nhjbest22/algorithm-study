@@ -12,12 +12,15 @@ public:
             to[trust[i][1]]++;
         }
 
-        vector<int> judge;
+        int ans = -1;
         for(int i = 1; i<= n; i++){
-            if(to[i] == n-1 && from[i] == 0) judge.push_back(i);
+            if(to[i] == n-1 && from[i] == 0) {
+                if(ans != -1) return -1;
+
+                ans = i;
+            }
         }
 
-        if(judge.size() == 0 || judge.size() > 1) return -1;
-        return judge[0];
+        return ans;
     }
 };
