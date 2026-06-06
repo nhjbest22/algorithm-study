@@ -8,17 +8,14 @@ public:
         int en = indexDifference;
         int st = 0;
 
-        pair<int, int> MAX = {-1, -1}, MIN = {INT32_MAX, INT32_MAX};
+        int MIN = 0, MAX = 0;
 
         while(en < nums.size()){
-            pair<int, int> prev = {nums[st], st};
-            pair<int, int> cur = {nums[en], en};
+            if(nums[st] > nums[MAX]) MAX = st;
+            if(nums[st] < nums[MIN]) MIN = st;
 
-            MAX = max(MAX, prev);
-            MIN = min(MIN, prev);
-
-            if(diff(cur, MAX) >= valueDifference) return {en, MAX.second};
-            if(diff(cur, MIN) >= valueDifference) return {en, MIN.second};
+            if(abs(nums[en] - nums[MAX]) >= valueDifference) return {en, MAX};
+            if(abs(nums[en] - nums[MIN]) >= valueDifference) return {en, MIN};
 
 
             st++;
