@@ -12,16 +12,15 @@ public:
             for(int nxt: {i + zero, i + one}){
                 if(nxt > high) continue;
 
-                dp[nxt] += dp[i];
-                dp[nxt] %= mod;
+                dp[nxt] = (dp[nxt] + dp[i])%mod;
             }
         }
 
         int ans = 0;
-        for(int i = low; i <= high; i++){
-            ans += dp[i];
-            ans %= mod;
-        }
+        
+        for(int i = low; i <= high; i++)
+            ans = (ans + dp[i])%mod;
+        
 
         return ans;
     }
