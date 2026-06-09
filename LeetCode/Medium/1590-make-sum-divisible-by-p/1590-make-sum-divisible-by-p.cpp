@@ -15,8 +15,7 @@ public:
         int A = 0;
         int MIN = INT32_MAX;
         for(int i = 0; i < nums.size(); i++){
-            A += nums[i];
-            A %= p;
+            A = (A + nums[i]) % p;
             um[A] = i+1;
 
             int B = (A - target + p)%p;
