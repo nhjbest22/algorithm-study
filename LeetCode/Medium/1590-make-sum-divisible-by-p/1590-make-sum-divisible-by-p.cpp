@@ -1,13 +1,13 @@
 class Solution {
 public:
     int minSubarray(vector<int>& nums, int p) {
-        vector<pair<int ,int>> sums;
-
         int target = 0;
         for(int i = 0; i < nums.size(); i++){
             target += nums[i];
             target %= p;
         }
+
+        if(target == 0) return 0;
 
         unordered_map<int, int> um;
         um[0] = 0;
@@ -24,10 +24,6 @@ public:
 
             MIN = min(MIN, i+1 - um[B]);
         }
-
-        // target = 6
-        // 0, 1, 3, 6
-        // 
 
         if(MIN == nums.size()) return -1;
         return MIN;
