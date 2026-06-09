@@ -1,63 +1,34 @@
 class Solution {
 public:
-    int offSet = 100'000;
-    int cnt[200'005];
-
-    int findMinOfSet(set<int>& s){
-        if(s.size() == 1) return 0;
-
-        int ret = 0x3f3f3f3f;
-        auto it = s.begin();
-        int prev = *it;
-        it++;
-
-        while(it != s.end()){
-            ret = min(ret, abs(*it - prev));
-            prev = *it;
-            it++;
-        }
-
-        return ret;
-    }
-
     vector<vector<int>> minAbsDiff(vector<vector<int>>& grid, int k) {
-        fill(cnt, cnt + 200'005, 0);
-        set<int> s;
         int M = grid.size(), N = grid[0].size();
         vector<vector<int>> ans;
+        vector<int> buffer(k*k);
 
         for(int i = 0; i < M - k + 1; i++){
-            vector<int> buffer;
-            s.clear();
-
+            vector<int> diff;
             for(int j = 0; j < N - k + 1; j++){
-                if(j == 0){
-                    for(int x = i; x < i + k; x++){
-                        for(int y = 0; y < k; y++){
-                            cnt[grid[x][y] + offSet]++;
+                int offSet = 0;
 
-                            s.insert(grid[x][y]);
-                        }
+                for(int x = i; x < i + k; x++){
+                    for(int y = j; y < j + k; y++){
+                        buffer[offSet++] = grid[x][y];
                     }
+                }
 
-                } else{
-                    for(int x = i; x < i + k; x++){
-                        cnt[grid[x][j-1] + offSet]--;
+                int MIN = INT32_MAX;
+                sort(buffer.begin(), buffer.end());
 
-                        if(!cnt[grid[x][j-1] + offSet]) s.erase(s.find(grid[x][j-1]));
-                    }
+                for(int idx = 1; idx < k*k; idx++){
+                    if(buffer[idx] == buffer[idx-1]) continue;
 
-                    for(int x = i; x < i + k; x++){
-                        cnt[grid[x][j+k-1] + offSet]++;
+                    MIN = min(MIN, abs(buffer[idx] - buffer[idx-1]));
+                }
 
-                        s.insert(grid[x][j+k-1]);
-                    }
-                }       
-
-                buffer.push_back(findMinOfSet(s));
+                diff.push_back(MIN == INT32_MAX ? 0 : MIN);
             }
 
-            ans.push_back(buffer);
+            ans.push_back(diff);
         }
 
         return ans;
