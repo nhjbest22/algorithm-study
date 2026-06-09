@@ -9,7 +9,7 @@ public:
 
         if(target == 0) return 0;
 
-        map<int, int> um;
+        unordered_map<int, int> um;
         um[0] = 0;
 
         int A = 0;
