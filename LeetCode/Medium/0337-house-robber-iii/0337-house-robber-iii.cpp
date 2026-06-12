@@ -11,52 +11,22 @@
  */
 class Solution {
 public:
-    int dp[10'005][2];
-    unordered_map<TreeNode*, int> um;
-    int cnt;
+    pair<int, int> dfs(TreeNode* cur){
+        if(!cur) return {0, 0};
 
-    int dfs(TreeNode* cur, bool isRobbed){
-        int idx = um[cur];
-        if(dp[idx][isRobbed] != -1) return dp[idx][isRobbed];
+        // robbed, not-robbed
 
-        dp[idx][isRobbed] = isRobbed ? cur->val : 0;
+        auto l = dfs(cur->left);
+        auto r = dfs(cur->right);
 
-        // if(cur->left != nullptr){
-        //     dp[idx][isRobbed] += max(dfs(ur->left, false), dfs(cur->left, true));
-        // }
+        int rob = cur->val + l.second + r.second;
+        int notRob = max(l.first, l.second) + max(r.first, r.second);
 
-        // if(cur->right != nullptr){
-        //     dp[idx][isRobbed] += max(dfs(ur->right, false), dfs(cur->right, true));
-        // }
-
-        for(auto nxt: {cur->left, cur->right}){
-            if(nxt == nullptr) continue;
-
-            int MAX = dfs(nxt, false);
-            if(isRobbed == false) MAX = max(MAX, dfs(nxt, true));
-
-            dp[idx][isRobbed] += MAX;
-        }
-
-        return dp[idx][isRobbed];
-    }
-
-    void search_tree(TreeNode* cur){
-        um[cur] = cnt++;
-
-        if(cur->left != nullptr) search_tree(cur->left);
-        if(cur->right != nullptr) search_tree(cur->right);
+        return {rob, notRob};
     }
 
     int rob(TreeNode* root) {
-        fill(&dp[0][0], &dp[0][0] + 10'005*2, -1);
-        um.clear();
-        cnt = 0;
-
-        search_tree(root);
-        dfs(root, false);
-        dfs(root, true);
-
-        return max(dp[0][false], dp[0][true]);
+        auto p = dfs(root);
+        return max(p.first, p.second);
     }
 };
