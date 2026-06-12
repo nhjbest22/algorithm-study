@@ -7,13 +7,14 @@ public:
         // 5 -> -2 -1 0 1 2
         
         int cur = n/2;
-        cur *= -1;
+        while(cur > 0){
+            ans.push_back(cur);
+            ans.push_back(-cur);
 
-        for(int i = 0; i < n; i++){
-            if(n%2 == 0 && cur == 0) cur++;
-
-            ans.push_back(cur++);
+            cur--;
         }
+
+        if(n%2) ans.push_back(0);
 
         return ans;
     }
