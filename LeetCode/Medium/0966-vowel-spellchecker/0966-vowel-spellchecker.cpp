@@ -10,10 +10,8 @@ public:
 
     string& vowelToA(string& str){
         for(auto& ch: str){
-            char lower_ch = tolower(ch);
-            
-            for(auto vowel: {'a', 'e', 'i', 'o', 'u'}){
-                if(lower_ch == vowel){
+            for(auto& vowel: {'a', 'e', 'i', 'o', 'u'}){
+                if(ch == vowel){
                     ch = 'a';
                     break;
                 }
