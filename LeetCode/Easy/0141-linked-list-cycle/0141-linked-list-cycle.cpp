@@ -8,19 +8,17 @@
  */
 class Solution {
 public:
-    const int Offset = 100'001;
+    const int check = 100'001;
 
     bool hasCycle(ListNode *head) {
         auto cur = head;
-        int idx = 0;
 
         while(cur != nullptr){
-            if(cur->val >= Offset) return true;
+            if(cur->val == check) return true;
 
-            cur->val = Offset + idx++;
+            cur->val = check;
             cur = cur -> next;
         }
-
 
         return false;
     }
