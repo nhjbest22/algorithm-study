@@ -14,28 +14,20 @@ public:
     vector<string> ans;
     int path[105];
 
-    void backtrack(TreeNode* cur, int cnt){
-        path[cnt] = cur->val;
-
-        if(cur -> left == nullptr && cur -> right == nullptr){
-            string str = to_string(path[0]);
-
-            for(int i = 1; i <= cnt; i++){
-                str += "->";
-                str += to_string(path[i]);
-            }
+    void backtrack(TreeNode* cur, vector<string>& ans, string str){
+        str += to_string(cur->val);
+        if(cur->left == nullptr && cur->right == nullptr){
             ans.push_back(str);
             return;
         }
 
-        if(cur -> left != nullptr) backtrack(cur -> left, cnt+1);
-        if(cur -> right != nullptr) backtrack(cur->right, cnt+1);
+        if(cur -> left != nullptr) backtrack(cur -> left, ans, str + "->");
+        if(cur -> right != nullptr) backtrack(cur->right, ans, str + "->");
     }
 
     vector<string> binaryTreePaths(TreeNode* root) {
-        ans.clear();
-
-        backtrack(root, 0);
+        vector<string> ans;
+        backtrack(root, ans, "");
 
         return ans;
     }
