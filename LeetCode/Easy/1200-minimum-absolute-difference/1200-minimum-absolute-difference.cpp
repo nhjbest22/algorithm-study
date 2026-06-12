@@ -7,16 +7,12 @@ public:
         int MIN = INT32_MAX;
         for(int i = 1; i< arr.size(); i++){
             int diff = arr[i] - arr[i-1];
-            MIN = min(MIN, diff);
-        }
 
-        for(int i = 1; i< arr.size(); i++){
-            int diff = arr[i] - arr[i-1];
-
-            if(diff != MIN) continue;
-
-            vector<int> v = {arr[i-1], arr[i]};
-            ans.push_back(v);
+            if(diff > MIN) continue;
+            if(diff != MIN) ans.clear();
+            
+            MIN = diff;
+            ans.push_back({arr[i-1], arr[i]});
         }
 
         return ans;
