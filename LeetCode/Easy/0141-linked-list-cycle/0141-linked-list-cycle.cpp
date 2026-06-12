@@ -8,16 +8,19 @@
  */
 class Solution {
 public:
+    const int Offset = 100'001;
+
     bool hasCycle(ListNode *head) {
-        unordered_set<ListNode*> us;
-
         auto cur = head;
-        while(cur != nullptr){
-            if(us.find(cur) != us.end()) return true;
+        int idx = 0;
 
-            us.insert(cur);
+        while(cur != nullptr){
+            if(cur->val >= Offset) return true;
+
+            cur->val = Offset + idx++;
             cur = cur -> next;
         }
+
 
         return false;
     }
