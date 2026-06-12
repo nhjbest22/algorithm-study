@@ -1,22 +1,15 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        bool check[100'005];
-        fill(check, check + 100'005, false);
-
         int N = nums.size();
-        check[0] = true;
 
+        int MAX = 0;
         for(int i = 0; i < N; i++){
-            if(check[i] == false) continue;
-            
-            int cur = nums[i];
-            for(int j = 0; j <= cur && j + i < N; j++){
-                check[i+j] = true;
+            if(i > MAX) break;
 
-            }
+            MAX = max(MAX, i + nums[i]);
         }
 
-        return check[N-1];
+        return MAX >= N-1;
     }
 };
