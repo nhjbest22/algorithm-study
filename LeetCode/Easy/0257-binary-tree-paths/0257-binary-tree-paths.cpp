@@ -11,9 +11,6 @@
  */
 class Solution {
 public:
-    vector<string> ans;
-    int path[105];
-
     void backtrack(TreeNode* cur, vector<string>& ans, string str){
         str += to_string(cur->val);
         if(cur->left == nullptr && cur->right == nullptr){
