@@ -7,24 +7,21 @@ public:
             return v1[1] < v2[1];
         });
 
-        vector<vector<int>> new_ranges;
-        int N = ranges.size();
-        new_ranges.push_back(ranges[0]);
+        int N = 1;
+        int en = ranges[0][1];
 
-        for(int i = 1; i < N; i++){
-            auto& en = new_ranges[new_ranges.size() -1];
-            if(en[1] >= ranges[i][0]){
-                en[1] = max(en[1], ranges[i][1]);
+        for(int i = 1; i < ranges.size(); i++){
+            if(en >= ranges[i][0]){
+                en = max(en, ranges[i][1]);
                 continue;
             }
 
-            new_ranges.push_back(ranges[i]);
+            N++;
+            en = ranges[i][1];
         }
 
-        int M = new_ranges.size();
-        
         int ans = 1;
-        while(M--){
+        while(N--){
             ans <<= 1;
             ans %= mod;
         }
