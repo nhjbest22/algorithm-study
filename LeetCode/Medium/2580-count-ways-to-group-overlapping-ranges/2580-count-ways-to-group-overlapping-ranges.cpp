@@ -7,8 +7,8 @@ public:
             return v1[1] < v2[1];
         });
 
-        int N = 1;
         int en = ranges[0][1];
+        int ans = 2;
 
         for(int i = 1; i < ranges.size(); i++){
             if(en >= ranges[i][0]){
@@ -16,14 +16,9 @@ public:
                 continue;
             }
 
-            N++;
-            en = ranges[i][1];
-        }
-
-        int ans = 1;
-        while(N--){
-            ans <<= 1;
+            ans *= 2;
             ans %= mod;
+            en = ranges[i][1];
         }
 
         return ans;
