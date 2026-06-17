@@ -1,20 +1,20 @@
 class Solution {
 public:
     int minimumDistance(vector<int>& nums) {
-        vector<pair<int, int>> v;
         int ans = INT32_MAX;
         int N = nums.size();
 
-        for(int i = 0; i < N; i++)
-            v.push_back({nums[i], i});
-        
-        sort(v.begin(), v.end());
+        vector<int> last1(N+1, -1), last2(N+1, -1);
 
-        for(int i = 2; i < N; i++){
-            if(v[i].first != v[i-2].first) continue;
+        for(int i = 0; i <N; i++){
+            if(last1[nums[i]] != -1){
+                ans = min(ans, 2*(i - last1[nums[i]]));
+            }
 
-            ans = min(ans, 2*(v[i].second - v[i-2].second));
+            last1[nums[i]] = last2[nums[i]];
+            last2[nums[i]] = i;
         }
+
 
         return ans == INT32_MAX ? -1 : ans;
     }
