@@ -6,14 +6,10 @@ public:
         int N = nums.size();
 
         int buffer[N+10];
-        int st = N - (k%N);
 
-        st %= N;
-
-        for(int i = 0;i < N; i++){
-            buffer[i] = nums[st++];
-
-            st %= N;
+        for(int i = 0; i <N; i++){
+            int nxt = (i+k) % N;
+            buffer[nxt] = nums[i];
         }
 
         for(int i = 0;i < N; i++){
