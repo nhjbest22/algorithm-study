@@ -5,8 +5,6 @@ public:
 
         int N = nums.size();
 
-
-
         int buffer[N+10];
         int st = N - (k%N);
 
