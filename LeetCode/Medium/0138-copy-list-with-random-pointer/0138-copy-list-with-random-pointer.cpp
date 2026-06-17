@@ -46,8 +46,7 @@ public:
             if(ori_cur -> random != nullptr){
                 int idx = N2I[ori_cur->random];
 
-                Node* rand = I2N[idx];
-                new_cur -> random = rand;
+                new_cur -> random = I2N[idx];
             }
 
             ori_cur = ori_cur -> next;
