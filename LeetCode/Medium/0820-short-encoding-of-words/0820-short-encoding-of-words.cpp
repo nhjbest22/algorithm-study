@@ -1,33 +1,22 @@
 class Solution {
 public:
     int minimumLengthEncoding(vector<string>& words) {
-        bool isUsed[2005];
-        fill(isUsed, isUsed + 2005, true);
-
+        unordered_set<string> us;
         int N = words.size();
         int ans = 0;
-        for(auto& word: words) reverse(word.begin(), word.end());
-        sort(words.begin(), words.end());
-        
-        for(int i=0; i < N-1; i++){
-            if(words[i].size() > words[i+1].size()) continue;
 
-            int len = words[i].size();
-            bool isIncluded = true;
-            for(int j = 0; j < len; j++){
-                if(words[i][j] != words[i+1][j]){
-                    isIncluded = false;
-                    break;
-                }
-            }
+        for(auto& word: words) us.insert(word);
 
-            if(isIncluded) isUsed[i] = false;
+        for(int i=0; i < N; i++){
+            auto& word = words[i];
+
+            int len = word.size();
+            for(int idx =1; idx < len; idx++)
+                us.erase(word.substr(idx));
         }
-
-        for(int i = 0; i< N; i++){
-            if(!isUsed[i]) continue;
-
-            ans += (words[i].size() + 1);
+        
+        for(auto& key: us){
+            ans += key.size() + 1;
         }
 
         return ans;
