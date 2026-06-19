@@ -4,29 +4,21 @@ using namespace std;
 
 #define visit VISIT
 
-vector<int> ban_list[10], choose(10, 0);
-bool visit[10];
-int ans, N;
+vector<int> ban_list[10];
+int N;
 set<int> s;
 
-void backtrack(int k){
+void backtrack(int k, int bitmask){
     if(k == N){
-        int bitmask = 0;
-        
-        for(int i = 0; i < k; i++)
-            bitmask += (1 << choose[i]);
         s.insert(bitmask);
-        
         return;
     }
     
     for(auto idx: ban_list[k]){
-        if(visit[idx]) continue;
+        int cur = 1 << idx;
+        if(bitmask & cur) continue;
         
-        visit[idx] = true;
-        choose[k] = idx;
-        backtrack(k+1);
-        visit[idx] = false;
+        backtrack(k+1, bitmask | cur);
     }
 }
 
@@ -55,7 +47,7 @@ int solution(vector<string> user_id, vector<string> banned_id) {
         }
     }
     
-    backtrack(0);
+    backtrack(0, 0);
     
     return s.size();
 }
