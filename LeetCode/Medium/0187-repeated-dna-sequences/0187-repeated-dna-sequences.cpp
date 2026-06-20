@@ -8,10 +8,13 @@ public:
             if(i + 10 > N) break;
 
             string str = s.substr(i, 10);
-            if(us1.find(str) != us1.end())
-                us2.insert(str);
-            
-            us1.insert(str);
+
+            if(us1.find(str) == us1.end()){
+                us1.insert(str);
+                continue;
+            }
+
+            us2.insert(str);
         }
 
         vector<string> ans(us2.begin(), us2.end());
