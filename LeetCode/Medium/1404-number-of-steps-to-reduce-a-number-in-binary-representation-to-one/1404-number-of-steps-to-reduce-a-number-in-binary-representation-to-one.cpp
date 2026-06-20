@@ -17,6 +17,8 @@ public:
             carry = 1;
 
             for(int i = idx; i < s.size(); i++){
+                if(!carry) break;
+                
                 int ret = (s[i] - '0') + carry;
 
                 s[i] = (ret%2) + '0';
