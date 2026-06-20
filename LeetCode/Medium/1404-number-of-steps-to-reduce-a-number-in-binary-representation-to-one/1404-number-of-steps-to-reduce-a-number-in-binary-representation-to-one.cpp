@@ -8,8 +8,6 @@ public:
         reverse(s.begin(), s.end());
 
         while(idx < s.size() - 1){
-            cout<<s<<endl;
-
             ans++;
             if(s[idx] == '0'){
                 idx++;
@@ -27,9 +25,6 @@ public:
 
             if(carry) s += '1';
         }
-
-        cout<<s<<endl;
-
 
         return ans;
     }
