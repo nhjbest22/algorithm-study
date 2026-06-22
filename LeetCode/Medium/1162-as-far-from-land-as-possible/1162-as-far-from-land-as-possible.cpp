@@ -32,7 +32,6 @@ public:
                 int y = cur.second + dy[dir];
 
                 if(x < 0 || x >= N || y < 0 || y >= N) continue;
-                if(grid[x][y] == 1) continue;
                 if(cost[x][y] != -1) continue;
 
                 cost[x][y] = cost[cur.first][cur.second] + 1;
