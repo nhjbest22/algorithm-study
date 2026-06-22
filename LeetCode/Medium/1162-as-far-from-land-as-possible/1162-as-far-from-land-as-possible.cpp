@@ -36,18 +36,11 @@ public:
                 if(cost[x][y] != -1) continue;
 
                 cost[x][y] = cost[cur.first][cur.second] + 1;
+                MAX = max(MAX, cost[x][y]);
+                
                 Q.push({x, y});
             }
         }
-
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(grid[i][j] == 1) continue;
-
-                MAX = max(MAX, cost[i][j]);
-            }
-        }
-
 
         return MAX;
     }
