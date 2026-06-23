@@ -2,24 +2,29 @@ class Solution {
 public:
     const int mod = 1e9 + 7;
     int rangeSum(vector<int>& nums, int n, int left, int right) {
-        int sum[500'505];
-        int idx = 0, ans = 0;;
-        
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
+
         for(int i = 0; i < n; i++){
-            int tot = 0;
+            pq.push({nums[i], i});
+        }
+        
+        int sum = 0;
+        int idx = 0;
+        while(1){
+            idx++;
+            if(idx > right) break;
+            
+            auto [cur, cur_idx] = pq.top();
+            pq.pop();
+            
+            if(idx >= left) sum = (sum + cur) % mod;
 
-            for(int j = i; j < n; j++){
-                tot += nums[j];
-                sum[idx++] = tot;
-            }
+            if(cur_idx == n-1) continue;
+            
+            cur = (cur + nums[cur_idx +1])%mod;
+            pq.push({cur, cur_idx+1});
         }
 
-        sort(sum, sum + idx);
-        for(int i = left-1; i < right; i++){
-            ans += sum[i];
-            ans %= mod;
-        }
-
-        return ans;
+        return sum;
     }
 };
