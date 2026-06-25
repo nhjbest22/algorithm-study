@@ -7,7 +7,7 @@ public:
         for(int i = 0; i < N; i++){
             auto& ch = s[i];
             
-            for(auto vowel: {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}){
+            for(auto& vowel: {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}){
                 if(ch == vowel){
                     v.push_back(i);
                     break;
