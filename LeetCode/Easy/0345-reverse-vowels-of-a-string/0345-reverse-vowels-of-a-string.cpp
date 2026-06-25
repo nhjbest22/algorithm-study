@@ -3,16 +3,20 @@ public:
     string reverseVowels(string s) {
         vector<int> v;
         int N = s.size();
+        long long bitmask = 0;
+
+        for(auto& vowel: {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}){
+            int idx = vowel - 'A';
+            bitmask |= (long long)1 << idx;
+        }
 
         for(int i = 0; i < N; i++){
-            auto& ch = s[i];
+            int ch = s[i] - 'A';
+            if(ch < 0) continue;
             
-            for(auto& vowel: {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}){
-                if(ch == vowel){
-                    v.push_back(i);
-                    break;
-                }
-            }
+            long long bit = (long long)1 << ch;
+
+            if(bitmask & bit) v.push_back(i);
         }
 
         int M = v.size();
