@@ -11,18 +11,21 @@
  */
 class Solution {
 public:
-    int ans = 0;
+    int ans = -1;
+    int count = 0;
 
-    int dfs(TreeNode* cur, int k){
-        int cnt = 0;
-        if(cur -> left) cnt += dfs(cur->left, k);
+    void dfs(TreeNode* cur, int k){
+        if(!cur || count >= k) return;
 
-        cnt++;
-        if(k == cnt) ans = cur->val;
-        
-        if(cur->right) cnt += dfs(cur->right, k - cnt);
+        dfs(cur->left, k);
+        count++;
 
-        return cnt;
+        if(count == k){
+            ans = cur->val;
+            return;
+        }
+
+        dfs(cur->right, k);
     }
 
     int kthSmallest(TreeNode* root, int k) {
