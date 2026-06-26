@@ -3,23 +3,13 @@ public:
     int numTimesAllBlue(vector<int>& flips) {
         int N = flips.size();
         int ans = 0;
-        
-        bool isFlipped[50'005] = {false, };
-        priority_queue<int, vector<int>, greater<>> pq;
-        for(int i = 1; i <= N; i++) pq.push(i);
+        int MAX = 0;
 
         for(int i = 0; i < N; i++){
             auto& flip = flips[i];
-            isFlipped[flip] = true;
+            MAX = max(MAX, flip);
 
-            while(!pq.empty()){
-                auto cur = pq.top();
-                if(!isFlipped[cur]) break;
-
-                pq.pop();
-            }
-
-            ans += (pq.empty() ? 1 : pq.top() > (i + 1));
+            if(MAX == i+1) ans++;
         }
 
         return ans;
