@@ -1,14 +1,15 @@
 class Solution {
 public:
+    pair<int, int> v[100'005];
+
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
-        vector<pair<int, int>> v(100'005);
         int N = nums.size();
 
         for(int i = 0; i < N; i++){
             v[i] = {nums[i], i};
         }
         
-        sort(v.begin(), v.begin() + N);
+        sort(v, v + N);
         int prev = v[0].first;
 
         for(int i = 1; i < N; i++){
