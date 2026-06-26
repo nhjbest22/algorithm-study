@@ -1,6 +1,6 @@
 class LRUCache {
 private:
-    int last_update[10'005]; // key to time
+    int last_update[10'005] = {0, }; // key to time
     int time;
     queue<pair<int ,int>> Q; // key, 시간
     int data[10'005]; // key to data
@@ -8,7 +8,6 @@ private:
 
 public:
     LRUCache(int capacity) {
-        fill(last_update, last_update + 10'005, -1);
         time = 0;
         this->capacity = capacity;
     }
@@ -16,7 +15,7 @@ public:
     int get(int key) {
         time++;
 
-        if(last_update[key] == -1)
+        if(last_update[key] == 0)
             return -1;
 
         Q.push({key, time});
@@ -29,7 +28,7 @@ public:
         time++;
         Q.push({key, time});
 
-        if(last_update[key] != -1){
+        if(last_update[key] != 0){
             last_update[key] = time;
             data[key] = value;
 
@@ -54,7 +53,7 @@ public:
                 continue;
             }
 
-            last_update[cur_key] = -1;
+            last_update[cur_key] = 0;
             break;
         }
 
