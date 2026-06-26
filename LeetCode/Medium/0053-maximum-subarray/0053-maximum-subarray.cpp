@@ -1,13 +1,13 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        vector<int> sums;
+        vector<int> sums(100'005, 0);
         int N = nums.size();
         
         int sum = 0;
         for(int i = 0; i <N; i++){
             sum += nums[i];
-            sums.push_back(sum);
+            sums[i] = sum;
         }
 
         int ans = sums[0];
