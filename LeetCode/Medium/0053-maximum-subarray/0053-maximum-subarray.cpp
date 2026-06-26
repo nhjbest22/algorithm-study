@@ -14,12 +14,6 @@ public:
         int MIN = min(sums[0], 0);
 
         for(int i = 1; i < N; i++){
-            // if(MAX < sums[i]){
-            //     MAX = sums[i];
-            //     ans = MAX - MIN;
-            //     continue;
-            // }
-
             ans = max(ans, sums[i] - MIN);
 
             MIN = min(MIN, sums[i]);
