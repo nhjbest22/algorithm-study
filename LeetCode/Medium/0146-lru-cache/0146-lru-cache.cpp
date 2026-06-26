@@ -35,7 +35,7 @@ public:
             return;
         }
 
-        if(capacity > 0){
+        if(capacity){
             last_update[key] = time;
             data[key] = value;
 
