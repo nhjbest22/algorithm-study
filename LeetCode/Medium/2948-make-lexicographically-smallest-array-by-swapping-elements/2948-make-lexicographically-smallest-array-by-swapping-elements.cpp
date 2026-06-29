@@ -1,40 +1,54 @@
 class Solution {
+    const static int MAX = 1e5;
+    int p[MAX + 5];
+
+    int find(int x){
+        if(p[x] < 0) return x;
+        return p[x] = find(p[x]);
+    }
+
+    bool is_diff_group(int u, int v){
+        u = find(u);
+        v = find(v);
+
+        if(u == v) return false;
+
+        if(p[u] == p[v]) p[u]--;
+        if(p[u] < p[v]) p[v] = u;
+        else p[u] = v;        
+
+        return true;
+    }
 public:
     vector<int> lexicographicallySmallestArray(vector<int>& nums, int limit) {
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
         int N = nums.size();
+        fill(p, p + MAX, -1);
 
-        for(int i = 0; i <N; i++) pq.push({nums[i], i});
-        vector<int> v_num(N), v_idx(N);
+        vector<pair<int, int>> v;
+        for(int i = 0; i < N; i++)
+            v.push_back({nums[i], i});
 
-        while(1){
-            if(pq.empty()) break;
+        sort(v.begin(), v.end());
 
-            int len = 0;
-            auto [prev_num, prev_idx] = pq.top();
-            pq.pop();
+        for(int i = 1; i < N; i++){
+            if(v[i].first - v[i-1].first > limit) continue;
 
-            v_num[len] = prev_num;
-            v_idx[len++] = prev_idx;
+            is_diff_group(v[i].second, v[i-1].second);
+        }
 
-            while(!pq.empty()){
-                auto [cur_num, cur_idx] = pq.top();
-                if(cur_num - prev_num > limit) break;
+        unordered_map<int, queue<int>> groups;
+        for(int i = 0; i < N; i++){
+            auto& [num, idx] = v[i];
 
-                pq.pop();
+            int root = find(idx);
+            groups[root].push(num);
+        }
 
-                v_num[len] = cur_num;
-                v_idx[len++] = cur_idx;
+        for(int i = 0; i < N; i++){
+            int root = find(i);
 
-                prev_num = cur_num;
-                prev_idx = cur_idx;
-            }
-
-            sort(v_idx.begin(), v_idx.begin() + len);
-            for(int i = 0; i < len; i++){
-                int idx = v_idx[i];
-                nums[idx] = v_num[i];
-            }
+            nums[i] = groups[root].front();
+            groups[root].pop();
         }
 
         return nums;
