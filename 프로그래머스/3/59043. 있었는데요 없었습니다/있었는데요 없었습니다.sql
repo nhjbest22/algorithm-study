@@ -1,0 +1,20 @@
+WITH O AS (
+    SELECT
+        *
+    FROM
+        ANIMAL_OUTS
+)
+
+SELECT
+    I.ANIMAL_ID,
+    I.NAME
+FROM
+    ANIMAL_INS I
+JOIN
+    O
+ON
+    I.ANIMAL_ID = O.ANIMAL_ID
+WHERE
+    I.DATETIME > O.DATETIME
+ORDER BY
+    I.DATETIME ASC;
