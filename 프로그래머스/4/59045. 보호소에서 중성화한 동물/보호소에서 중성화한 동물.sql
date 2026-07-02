@@ -4,9 +4,7 @@ WITH O AS (
     FROM
         ANIMAL_OUTS
     WHERE
-        SEX_UPON_OUTCOME LIKE 'Spayed%'
-    OR
-        SEX_UPON_OUTCOME LIKE 'Neutered%'
+        SEX_UPON_OUTCOME NOT LIKE 'Intact%'
 )
 
 SELECT
