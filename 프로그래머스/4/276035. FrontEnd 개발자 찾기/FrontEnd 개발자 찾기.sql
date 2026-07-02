@@ -1,21 +1,20 @@
-WITH FE AS (
-    SELECT 
-        SUM(CODE) AS CODE
-    FROM
-        SKILLCODES
-    WHERE 
-        CATEGORY = 'Front End'
-)
-
 SELECT
-    D.ID,
-    D.EMAIL,
-    D.FIRST_NAME,
-    D.LAST_NAME
+    ID,
+    EMAIL,
+    FIRST_NAME,
+    LAST_NAME
 FROM
-    DEVELOPERS D,
-    FE
+    DEVELOPERS D
 WHERE
-    D.SKILL_CODE & FE.CODE > 0
+    EXISTS (
+        SELECT
+            1
+        FROM
+            SKILLCODES S
+        WHERE
+            S.CATEGORY = "Front End"
+        AND
+            D.SKILL_CODE & S.CODE > 0
+    )
 ORDER BY
-    D.ID ASC;
+    ID ASC;
