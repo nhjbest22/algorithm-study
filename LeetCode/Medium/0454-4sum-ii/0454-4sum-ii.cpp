@@ -5,19 +5,15 @@ public:
         unordered_map<int, int> um;
         int ans = 0;
 
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                um[nums3[i] + nums4[j]]++;
+        for(auto& num1: nums1){
+            for(auto& num2: nums2){
+                um[num1 + num2]++;
             }
         }
 
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                int sum = nums1[i] + nums2[j];
-
-                if(um.find(-sum) == um.end()) continue;
-                
-                ans += um[-sum];
+        for(auto& num3: nums3){
+            for(auto& num4: nums4){
+                ans += um[-(num3 + num4)];
             }
         }
 
