@@ -27,22 +27,18 @@ public:
         }
 
         dfs(k);
-        bool isContaminated = true;
+        bool canRemove = true;
 
-        for(int i = 0; i < n; i++){
-            if(VISIT[i]) continue;
-            if(!isContaminated) break;
-
-            for(auto& nxt: adj[i]){
-                if(VISIT[nxt]){
-                    isContaminated = false;
-                    break;
-                }
+        for(const auto& edge: invocations){
+            const int &u = edge[0], &v = edge[1];
+            if(!VISIT[u] && VISIT[v]){
+                canRemove = false;
+                break;
             }
         }
 
         for(int i = 0; i < n; i++){
-            if(VISIT[i] && isContaminated) continue;
+            if(VISIT[i] && canRemove) continue;
 
             ans.push_back(i);
         }   
