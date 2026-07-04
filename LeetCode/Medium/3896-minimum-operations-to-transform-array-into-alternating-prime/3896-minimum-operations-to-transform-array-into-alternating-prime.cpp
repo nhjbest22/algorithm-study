@@ -13,7 +13,6 @@ public:
         }
 
         vector<int> primes;
-        primes.reserve(100'005);
         for(int i = 2; i < 100'005; i++){
             if(!isPrime[i]) continue;
 
@@ -23,16 +22,15 @@ public:
         int N = nums.size();
         int ans = 0;
         for(int i = 0; i < N; i++){
-            auto it = lower_bound(primes.begin(), primes.end(), nums[i]);
+            int& num = nums[i];
 
-            if(i % 2 == 0){
-                ans += *it - nums[i];
-                continue;
+            if(i & 1){
+                while(isPrime[num++])
+                    ans++;
+            }else{
+                while(!isPrime[num++])
+                    ans++;
             }
-
-            if(!isPrime[nums[i]]) continue;
-
-            ans += (nums[i] <= 3 ? 4 - nums[i] : 1);
         }
 
         return ans;
