@@ -1,9 +1,8 @@
 class Solution {
 public:
     bool VISIT[100'005];
-    vector<int> adj[100'005];
 
-    void dfs(int cur){
+    void dfs(int cur, vector<vector<int>>& adj){
         if(VISIT[cur]) return;
 
         VISIT[cur] = true;
@@ -11,12 +10,15 @@ public:
         for(auto& nxt: adj[cur]){
             if(VISIT[nxt]) continue;
 
-            dfs(nxt);
+            dfs(nxt, adj);
         }
     }
 
     vector<int> remainingMethods(int n, int k, vector<vector<int>>& invocations) {
+        fill(VISIT, VISIT + 100'005, false);
+        vector<vector<int>> adj(n);
         vector<int> ans;
+
         fill(VISIT, VISIT + n, false);
         for(int i = 0; i < n; i++)
             adj[i].clear();
@@ -26,7 +28,7 @@ public:
             adj[u].push_back(v);
         }
 
-        dfs(k);
+        dfs(k, adj);
         bool canRemove = true;
 
         for(const auto& edge: invocations){
