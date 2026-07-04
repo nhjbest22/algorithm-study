@@ -6,14 +6,15 @@ public:
         int N = nums.size();
         long long ans = 0;
 
-        vector<int> v_max;
+        vector<int> v_max(100'005);
 
+        int idx = 0;
         for(int i = 0; i < N; i++){
             if(nums[i] == MAX)
-                v_max.push_back(i);
+                v_max[idx++] = i;
         }
 
-        if(v_max.size() < k) return 0;
+        if(idx < k) return 0;
 
         int prev = -1;
 
