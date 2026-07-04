@@ -10,7 +10,8 @@ public:
 
             int sum = 0;
             while(n){
-                sum += (n % 10) * (n % 10);
+                int mod = n % 10;
+                sum += mod * mod;
                 n /= 10;
             }
 
