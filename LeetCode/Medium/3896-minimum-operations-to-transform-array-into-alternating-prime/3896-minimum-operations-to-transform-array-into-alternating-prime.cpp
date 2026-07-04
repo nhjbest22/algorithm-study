@@ -13,6 +13,7 @@ public:
         }
 
         vector<int> primes;
+        primes.reserve(100'005);
         for(int i = 2; i < 100'005; i++){
             if(!isPrime[i]) continue;
 
