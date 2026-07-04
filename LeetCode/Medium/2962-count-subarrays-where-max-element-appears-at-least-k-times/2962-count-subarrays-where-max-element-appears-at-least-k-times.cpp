@@ -5,23 +5,20 @@ public:
 
         int N = nums.size();
         long long ans = 0;
+        
+        int st = 0;
+        int count = 0;
 
-        vector<int> v_max;
+        for(int en = 0; en < N; en++){
+            if(nums[en] == MAX) count++;
 
-        for(int i = 0; i < N; i++){
-            if(nums[i] == MAX)
-                v_max.push_back(i);
-        }
+            while(count >= k){
+                if(nums[st] == MAX) 
+                    count--;
+                st++;
+            }
 
-        if(v_max.size() < k) return 0;
-
-        int prev = -1;
-
-        for(int i = v_max[k-1]; i < N; i++){
-            if(nums[i] == MAX)
-                prev++;
-
-            ans += (v_max[prev] + 1);
+            ans += st;
         }
 
         return ans;
