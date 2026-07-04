@@ -22,7 +22,7 @@ public:
         int N = nums.size();
         int ans = 0;
         for(int i = 0; i < N; i++){
-            int& num = nums[i];
+            int num = nums[i];
 
             if(i & 1){
                 while(isPrime[num++])
