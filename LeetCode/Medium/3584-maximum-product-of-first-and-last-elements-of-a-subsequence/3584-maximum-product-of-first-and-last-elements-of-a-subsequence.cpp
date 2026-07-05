@@ -1,28 +1,26 @@
 class Solution {
 public:
     long long maximumProduct(vector<int>& nums, int m) {
-        long long MAX = -1e11;
+        int MAX = -1e6, MIN = 1e6;
+        long long ans = -1e11;
         int N = nums.size();
 
-        int suffix[100'005][2]; //MAX, MIN;
+        if(m == 1){
+            long long MAX = *max_element(nums.begin(), nums.end());
+            long long MIN = *min_element(nums.begin(), nums.end());
 
-        suffix[N-1][0] = suffix[N-1][1] = nums[N-1];
-        for(int i = N-2; i>=0; i--){
-            suffix[i][0] = max(suffix[i+1][0], nums[i]);
-            suffix[i][1] = min(suffix[i+1][1], nums[i]);
+            return max(MAX*MAX, MIN*MIN);
         }
 
-        if(m == 1)
-            return max({(long long)suffix[0][0] * suffix[0][0], (long long)suffix[0][1] * suffix[0][1]});
-        
+        for(int i = N-1; i >= 0; i--){
+            if(i - m + 1 < 0) break;
 
-        for(int i = 0; i < N; i++){
-            if(i + m-1 >= N) break;
+            MAX = max(MAX, nums[i]);
+            MIN = min(MIN, nums[i]);
 
-            int& target = nums[i] > 0 ? suffix[i + m - 1][0] : suffix[i + m - 1][1];
-            MAX = max(MAX, (long long)nums[i]*target);
+            ans = max({ans, (long long)MAX * nums[i-m+1], (long long)MIN * nums[i-m+1]});
         }
 
-        return MAX;
+        return ans;
     }
 };
