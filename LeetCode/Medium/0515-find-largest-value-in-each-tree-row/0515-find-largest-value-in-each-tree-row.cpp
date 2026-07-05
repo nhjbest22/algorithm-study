@@ -11,28 +11,22 @@
  */
 class Solution {
 public:
+    void dfs(TreeNode* cur, int level, vector<int>& res){
+        if(!cur) return;
+
+        if(res.size() == level)
+            res.push_back(cur->val);
+        else
+            res[level] = max(res[level], cur->val);
+
+        dfs(cur->left, level + 1, res);
+        dfs(cur->right, level + 1, res);
+    }
+
     vector<int> largestValues(TreeNode* root) {
-        vector<int> MAX(10'005, INT32_MIN);
-        int H = -1;
+        vector<int> res;
+        dfs(root, 0, res);
 
-        queue<pair<TreeNode *, int>> Q;
-        Q.push({root, 0});
-
-        while(!Q.empty()){
-            auto [cur, k] = Q.front();
-            Q.pop();
-
-            if(!cur) continue;
-
-            MAX[k] = max(MAX[k], cur->val);
-            H = k;
-
-            Q.push({cur->left, k+1});
-            Q.push({cur->right, k+1});
-        }
-
-        MAX.resize(H + 1);
-
-        return MAX;
+        return res;
     }
 };
