@@ -1,9 +1,10 @@
 class Solution {
 public:
     vector<vector<int>> ans;
+    vector<int> nums;
     int target;
 
-    void backtrack(int idx, int sum, const vector<int>& candidates, vector<int>& nums, const int& target){
+    void backtrack(int idx, int sum, const vector<int>& candidates, const int& target){
         if(sum == target){
             ans.push_back(nums);
             return;
@@ -17,7 +18,7 @@ public:
 
             nums.push_back(candidates[i]);
             
-            backtrack(i + 1, sum + candidates[i], candidates, nums, target);
+            backtrack(i + 1, sum + candidates[i], candidates, target);
 
             nums.pop_back();
         }
@@ -27,10 +28,10 @@ public:
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(), candidates.end());
-        vector<int> nums;
+        nums.clear();
         ans.clear();
 
-        backtrack(0, 0, candidates, nums, target);
+        backtrack(0, 0, candidates, target);
 
         return ans;
     }
