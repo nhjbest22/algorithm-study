@@ -18,7 +18,7 @@ public:
             MAX = max(MAX, nums[i]);
             MIN = min(MIN, nums[i]);
 
-            ans = max({ans, (long long)MAX * nums[i-m+1], (long long)MIN * nums[i-m+1]});
+            ans = max(ans, (long long)nums[i-m+1] * (nums[i-m+1] > 0 ? MAX : MIN));
         }
 
         return ans;
