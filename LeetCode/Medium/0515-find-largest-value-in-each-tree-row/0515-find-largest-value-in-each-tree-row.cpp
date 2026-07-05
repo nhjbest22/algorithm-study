@@ -12,7 +12,7 @@
 class Solution {
 public:
     vector<int> largestValues(TreeNode* root) {
-        vector<int> MAX(100'005, INT32_MIN);
+        vector<int> MAX(10'005, INT32_MIN);
         int H = -1;
 
         queue<pair<TreeNode *, int>> Q;
