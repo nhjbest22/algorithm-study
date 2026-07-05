@@ -2,7 +2,6 @@ class Solution {
 public:
     vector<vector<int>> ans;
     vector<int> nums;
-    int target;
 
     void backtrack(int idx, int sum, const vector<int>& candidates, const int& target){
         if(sum == target){
@@ -14,7 +13,7 @@ public:
             if(i != idx && candidates[i-1] == candidates[i])
                 continue;
 
-            if(sum + candidates[i] > target) continue;
+            if(sum + candidates[i] > target) break;
 
             nums.push_back(candidates[i]);
             
