@@ -5,6 +5,9 @@ public:
         int N = intervals.size();
         vector<int> ans(N, -1);
 
+        starts.reserve(N);
+        ends.reserve(N);
+
         for(int i = 0; i < N; i++){
             auto& interval = intervals[i];
             starts.push_back({interval[0], i});
