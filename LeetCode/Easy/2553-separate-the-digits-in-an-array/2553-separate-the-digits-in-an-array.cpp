@@ -4,16 +4,11 @@ public:
         vector<int> ans;
 
         for(auto& num: nums){
-            vector<int> tmp;
+            string str = to_string(num);
 
-            while(num){
-                tmp.push_back(num % 10);
-                num /= 10;
+            for(auto& ch: str){
+                ans.push_back(ch - '0');
             }
-
-            reverse(tmp.begin(), tmp.end());
-
-            ans.insert(ans.end(), tmp.begin(), tmp.end());
         }
 
         return ans;
