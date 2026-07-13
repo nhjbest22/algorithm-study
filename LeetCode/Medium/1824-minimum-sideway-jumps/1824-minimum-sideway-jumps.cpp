@@ -1,28 +1,23 @@
 class Solution {
 public:
     int minSideJumps(vector<int>& obstacles) {
-        int dp[5*100'005][3];
-        fill(&dp[0][0], &dp[0][0] + 5*100'005*3, INT32_MAX);
-        
-        dp[0][1] = 0;
-        dp[0][0] = dp[0][2] = 1;
-
+        int dp[3] = {1, 0, 1};
         int N = obstacles.size();
+
         for(int i = 1; i < N; i++){
-            for(int j = 0; j < 3; j++) {
-                if(obstacles[i] -1 == j) continue;
-                int MIN = INT32_MAX;
+            int obs = obstacles[i] - 1;
 
-                for(int k = 0; k < 3; k++){
-                    if(dp[i-1][k] == INT32_MAX || obstacles[i] -1 == k) continue;
+            if(obs >= 0) dp[obs] = 1e9;
 
-                    MIN = min(MIN, j == k ? dp[i-1][k] : dp[i-1][k] + 1);
-                }
+            int min_jump = min({dp[0], dp[1], dp[2]}) + 1;
 
-                dp[i][j] = MIN;
+            for(int i = 0; i < 3; i++){
+                if(obs == i) continue;
+
+                dp[i] = min(dp[i], min_jump);
             }
         }
 
-        return min({dp[N-1][0], dp[N-1][1], dp[N-2][2]});
+        return min({dp[0], dp[1], dp[2]});
     }
 };
