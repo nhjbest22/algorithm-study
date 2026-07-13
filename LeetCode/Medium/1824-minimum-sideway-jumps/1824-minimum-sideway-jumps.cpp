@@ -11,10 +11,10 @@ public:
 
             int min_jump = min({dp[0], dp[1], dp[2]}) + 1;
 
-            for(int i = 0; i < 3; i++){
-                if(obs == i) continue;
+            for(int j = 0; j < 3; j++){
+                if(obs == j) continue;
 
-                dp[i] = min(dp[i], min_jump);
+                dp[j] = min(dp[j], min_jump);
             }
         }
 
