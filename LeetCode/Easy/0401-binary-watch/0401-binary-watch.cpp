@@ -3,28 +3,18 @@ public:
     vector<string> readBinaryWatch(int turnedOn) {
         vector<string> ans;
 
-        vector<int> t = {8, 4, 2, 1, 32, 16, 8, 4, 2, 1};
-        bool state[10];
+        for(int hour = 0; hour < 12; hour++){
+            for(int min = 0; min < 60; min++){
+                if(__builtin_popcount(hour) + __builtin_popcount(min) != turnedOn) continue;
 
-        for(int i = 0; i < 10; i++) state[i] = i < turnedOn ? 0 : 1;
+                string str = to_string(hour) + ":";
+                
+                if(min < 10) str += "0";
+                str += to_string(min);
 
-        do{
-            int hour = 0, min = 0;
-            for(int i = 0; i < 10; i++){
-                if(state[i]) continue;
-
-                if(i < 4) hour += t[i];
-                else min += t[i];
+                ans.push_back(str);
             }
-
-            if(hour > 11 || min > 59) continue;
-            
-            string str = to_string(hour) + ":";
-            str += (min < 10 ? "0" + to_string(min) : to_string(min));
-
-            ans.push_back(str);
-        }while(next_permutation(state, state + 10));
-
+        }
         return ans;
     }
 };
