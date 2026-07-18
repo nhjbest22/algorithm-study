@@ -1,9 +1,6 @@
 class Solution {
 public:
-    int ans;
-    vector<int> adj[100'005];
-
-    long long dfs(int cur, int pre, vector<vector<int>>& adj, vector<int>& cost){
+    long long dfs(int cur, int pre, int& ans, vector<vector<int>>& adj, vector<int>& cost){
         long long MAX = 0;
         int cnt = 0;
         int children = 0;
@@ -12,7 +9,7 @@ public:
             if(nxt == pre) continue;
 
             children++;
-            long long sum = dfs(nxt, cur, adj, cost);
+            long long sum = dfs(nxt, cur, ans, adj, cost);
 
             if(sum < MAX) continue;
 
@@ -30,8 +27,8 @@ public:
     }
 
     int minIncrease(int n, vector<vector<int>>& edges, vector<int>& cost) {
-        ans = 0;
         vector<vector<int>> adj(n);
+        int ans = 0;
 
         for(auto& e: edges){
             int u = e[0], v = e[1];
@@ -40,7 +37,7 @@ public:
             adj[v].push_back(u);
         }
 
-        dfs(0, -1, adj, cost);
+        dfs(0, -1, ans, adj, cost);
 
         return ans;
     }
