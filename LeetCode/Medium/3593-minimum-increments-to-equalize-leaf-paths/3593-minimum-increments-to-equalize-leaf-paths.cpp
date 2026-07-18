@@ -42,7 +42,6 @@ public:
         int N = cost.size();
         for(int i = 0 ; i < N; i++){
             adj[i].clear();
-            par[i] = 0;
         }
 
         for(auto& e: edges){
