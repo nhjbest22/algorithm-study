@@ -22,11 +22,7 @@ public:
         string ans = votes[0];
         sort(ans.begin(), ans.end(), [&](const auto& ch1, const auto& ch2){
             int idx1 = um[ch1], idx2 = um[ch2];
-
-            for(int i = 0; i < M ; i++){
-                if(rank[idx1][i] != rank[idx2][i])
-                    return rank[idx1][i] > rank[idx2][i];
-            }
+            if(rank[idx1] != rank[idx2]) return rank[idx1] > rank[idx2];
 
             return ch1 < ch2;
         });
