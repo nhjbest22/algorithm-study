@@ -7,20 +7,22 @@ public:
         vector<int> ans(M, 0);
 
         for(int i = 0; i < M; i++){
-            if(i) ans[i] = ans[i-1];
+            int cnt = i == 0 ? 0 : ans[i-1];
 
             auto& q = queries[i];
             int idx = q[0], C = q[1];
             
             if(colors[idx] != 0){
-                if(idx - 1 >= 0 && colors[idx-1] == colors[idx]) ans[i]--;
-                if(idx + 1 < n && colors[idx] == colors[idx + 1]) ans[i]--;
+                if(idx - 1 >= 0 && colors[idx-1] == colors[idx]) cnt--;
+                if(idx + 1 < n && colors[idx] == colors[idx + 1]) cnt--;
             }
 
             colors[idx] = C;
 
-            if(idx - 1 >= 0 && colors[idx-1] == colors[idx]) ans[i]++;
-            if(idx + 1 < n && colors[idx] == colors[idx + 1]) ans[i]++;
+            if(idx - 1 >= 0 && colors[idx-1] == colors[idx]) cnt++;
+            if(idx + 1 < n && colors[idx] == colors[idx + 1]) cnt++;
+
+            ans[i] = cnt;
         }
 
         return ans;
