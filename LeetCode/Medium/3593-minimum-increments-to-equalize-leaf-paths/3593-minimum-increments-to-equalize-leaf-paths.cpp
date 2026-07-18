@@ -16,10 +16,11 @@ public:
 
             if(sum < MAX) continue;
 
-            if(sum == MAX) cnt++;
-            else{
+            if (sum > MAX) {
                 MAX = sum;
                 cnt = 1;
+            } else if (sum == MAX) {
+                cnt++;
             }
         }
 
@@ -43,7 +44,7 @@ public:
             adj[v].push_back(u);
         }
 
-        dfs(0, 0, cost);
+        dfs(0, -1, cost);
 
         return ans;
     }
