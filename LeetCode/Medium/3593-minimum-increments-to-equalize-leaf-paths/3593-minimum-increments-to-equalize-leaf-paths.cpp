@@ -2,36 +2,28 @@ class Solution {
 public:
     int ans;
     vector<int> adj[100'005];
-    int par[100'005];
 
-    void find_pre(int cur, int pre){
-        par[cur] = pre;
+    long long dfs(int cur, int pre, vector<int>& cost){
+        long long MAX = 0;
+        int cnt = 0;
+        int children = 0;
 
         for(auto& nxt: adj[cur]){
             if(nxt == pre) continue;
 
-            find_pre(nxt, cur);
-        }
-    }
+            children++;
+            long long sum = dfs(nxt, cur, cost);
 
-    long long dfs(int cur, vector<int>& cost){
-        long long MAX = -1;
-        int cnt = 0;
-
-        for(auto& nxt: adj[cur]){
-            if(nxt == par[cur]) continue;
-
-            auto sum = dfs(nxt, cost);
-            
             if(sum < MAX) continue;
-            if(sum > MAX) cnt = 0;
 
-            MAX = max(MAX, sum);
-            cnt++;
+            if(sum == MAX) cnt++;
+            else{
+                MAX = sum;
+                cnt = 1;
+            }
         }
 
-        ans += adj[cur].size() - cnt - 1;
-        if(!cur) ans++;
+        ans += (children - cnt);
 
         return MAX + cost[cur];
     }
@@ -51,8 +43,7 @@ public:
             adj[v].push_back(u);
         }
 
-        find_pre(0, 0);
-        dfs(0, cost);
+        dfs(0, 0, cost);
 
         return ans;
     }
