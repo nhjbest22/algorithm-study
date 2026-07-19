@@ -7,7 +7,7 @@ class Solution {
         for(int i = 0; i < N; i++){
             int find = target - nums[i];
 
-            if(m.get(find) != null)
+            if(m.containsKey(find))
                 return new int[]{m.get(find), i};
 
             m.put(nums[i], i);
