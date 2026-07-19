@@ -10,14 +10,12 @@ class Solution {
 
         int N = points.length;
         for(int i = 0; i < N; i++)
-            pq.offer(new int[]{points[i][0], points[i][1]});
+            pq.offer(points[i]);
     
 
-        for(int i = 0; i < k; i++){
-            int[] top = pq.poll();
-            ans[i][0] = top[0];
-            ans[i][1] = top[1];
-        }
+        for(int i = 0; i < k; i++)
+            ans[i] = pq.poll();
+        
 
         return ans;
     }
