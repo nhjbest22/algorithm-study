@@ -5,13 +5,16 @@ class Solution {
             int dist1 = a[0]*a[0] + a[1]*a[1];
             int dist2 = b[0]*b[0] + b[1]*b[1];
 
-            return dist1 - dist2;
+            return dist2 - dist1;
         });
 
         int N = points.length;
-        for(int i = 0; i < N; i++)
-            pq.offer(points[i]);
-    
+        for(int[] p: points){
+            pq.offer(p);
+
+            if(pq.size() > k)
+                pq.poll();
+        }    
 
         for(int i = 0; i < k; i++)
             ans[i] = pq.poll();
