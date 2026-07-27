@@ -10,25 +10,25 @@ public:
         int cost[55][55];
         fill(&cost[0][0], &cost[0][0] + 55*55, INF);
 
-        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<>> pq; // cost, x, y        
+        deque<pair<int, int>> D;
         cost[0][0] = grid[0][0] ? 1 : 0;
-        pq.push({cost[0][0], 0, 0});
+        D.push_back({0, 0});
 
-        while(!pq.empty()){
-            auto [c, x, y] = pq.top();
-            pq.pop();
-
-            if(c != cost[x][y]) continue;
+        while(!D.empty()){
+            auto [x, y] = D.front();
+            D.pop_front();
 
             for(int dir = 0; dir < 4; dir++){
                 int nxtX = x + dx[dir];
                 int nxtY = y + dy[dir];
 
                 if(nxtX < 0 || nxtX >= N || nxtY < 0 || nxtY >= M) continue;
-                if(cost[nxtX][nxtY] <= c + grid[nxtX][nxtY]) continue;
+                if(cost[nxtX][nxtY] <= cost[x][y] + grid[nxtX][nxtY]) continue;
 
-                cost[nxtX][nxtY] = c + grid[nxtX][nxtY];
-                pq.push({cost[nxtX][nxtY], nxtX, nxtY});
+                cost[nxtX][nxtY] = cost[x][y] + grid[nxtX][nxtY];
+
+                if(grid[nxtX][nxtY]) D.push_back({nxtX, nxtY});
+                else D.push_front({nxtX, nxtY});
             }
         }
 
