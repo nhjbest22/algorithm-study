@@ -6,17 +6,13 @@ public:
         unordered_set<int> us2(nums2.begin(), nums2.end());
 
         for(auto& num: us1){
-            if(us2.find(num) != us2.end())
-                continue;
-            
-            v1.push_back(num);
+            if(us2.find(num) == us2.end())
+                v1.push_back(num);
         }
 
         for(auto& num: us2){
-            if(us1.find(num) != us1.end())
-                continue;
-            
-            v2.push_back(num);
+            if(us1.find(num) == us1.end())
+                v2.push_back(num);
         }
 
         return {v1, v2};
