@@ -1,27 +1,20 @@
 class Solution {
 public:
     int numDecodings(string s) {
-        int cnt[105];
-        fill(cnt, cnt + 105, 0);
-        cnt[0] = 1;
-
-        s = "0" + s;
-
         int N = s.size();
-        for(int i = 1; i < N; i++){
-            int num = s[i] - '0';
 
-            if(num != 0) cnt[i] += cnt[i-1];
-            if(s[i-1] == '0') continue;
+        vector<int> dp(N+1, 0);
+        dp[0] = 1;
+        dp[1] = s[0] == '0' ? 0 : 1;
 
-            if(i-2 < 0) continue;
+        for(int i = 2; i <= N; i++){
+            int one = s[i-1] - '0';
+            int two = 10*(s[i-2] - '0') + one;
 
-            num += (s[i-1] - '0')*10;
-            if(num > 26) continue;
-
-            cnt[i] += cnt[i-2];
+            if(one >= 1) dp[i] += dp[i-1];
+            if(two >= 10 && two <= 26) dp[i] += dp[i-2];
         }
 
-        return cnt[N-1];
+        return dp[N];
     }
 };
