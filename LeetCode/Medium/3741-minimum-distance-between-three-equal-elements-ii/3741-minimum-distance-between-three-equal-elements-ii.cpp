@@ -4,17 +4,17 @@ public:
         int ans = INT32_MAX;
         int N = nums.size();
 
-        vector<int> last1(N+1, -1), last2(N+1, -1);
+        vector<int> v1(N+ 5, -1), v2(N+5, -1);
 
-        for(int i = 0; i <N; i++){
-            if(last1[nums[i]] != -1){
-                ans = min(ans, 2*(i - last1[nums[i]]));
-            }
-
-            last1[nums[i]] = last2[nums[i]];
-            last2[nums[i]] = i;
+        for(int i = 0; i < N; i++){
+            int& num = nums[i];
+            
+            if(v1[num] != -1)
+                ans = min(ans, 2*(i - v1[num]));
+            
+            v1[num] = v2[num];
+            v2[num] = i;
         }
-
 
         return ans == INT32_MAX ? -1 : ans;
     }
