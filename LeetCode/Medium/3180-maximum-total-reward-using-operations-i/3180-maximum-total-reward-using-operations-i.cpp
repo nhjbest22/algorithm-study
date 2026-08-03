@@ -3,21 +3,20 @@ public:
     int maxTotalReward(vector<int>& reward) {
         int N = reward.size();
         sort(reward.begin(), reward.end());
+        const int SZ = 4001;
 
-        bool dp[4005] = {false, };
-        dp[0] = true;
-        
-        for(int i = 0; i < N; i++){
-            int& cur = reward[i];
-            for(int j = 2*cur -1; j >= cur; j--){
-                if(dp[j-cur])
-                    dp[j] = true;
-            }
+        bitset<SZ> dp, ones;
+        dp[0] = 1;
+        ones.set();
+
+        for(int& cur: reward){
+            bitset<SZ> mask = ones >> (SZ - cur);
+            dp |= (dp & mask) << cur;
         }
 
-        for(int i = 4004; i >= 0; i--)
+        for(int i = SZ; i >= 0; i--)
             if(dp[i]) return i;
-        
+
         return 0;
     }
 };
