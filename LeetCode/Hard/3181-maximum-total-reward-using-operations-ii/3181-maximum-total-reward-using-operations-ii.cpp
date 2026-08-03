@@ -1,9 +1,9 @@
 class Solution {
 public:
     int maxTotalReward(vector<int>& reward) {
-        int N = reward.size();
         sort(reward.begin(), reward.end());
-        reward.erase(unique(reward.begin(), reward.end()), reward.end());
+        auto it = unique(reward.begin(), reward.end());
+        int N = it - reward.begin();
 
         const int SZ = 100001;
 
@@ -11,7 +11,9 @@ public:
         dp[0] = 1;
         ones.set();
 
-        for(int& cur: reward){
+        for(int i = 0; i < N; i++){
+            int& cur = reward[i];
+            
             bitset<SZ> mask = ones >> (SZ - cur);
             dp |= (dp & mask) << cur;
         }
