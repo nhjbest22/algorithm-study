@@ -3,6 +3,8 @@ public:
     int maxTotalReward(vector<int>& reward) {
         int N = reward.size();
         sort(reward.begin(), reward.end());
+        reward.erase(unique(reward.begin(), reward.end()), reward.end());
+
         const int SZ = 100001;
 
         bitset<SZ> dp, ones;
@@ -14,7 +16,7 @@ public:
             dp |= (dp & mask) << cur;
         }
 
-        for(int i = SZ; i >= 0; i--)
+        for(int i = SZ - 1; i >= 0; i--)
             if(dp[i]) return i;
 
         return 0;
