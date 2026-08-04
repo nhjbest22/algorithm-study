@@ -1,57 +1,33 @@
 class Solution {
 public:
-    int find_local_diff(vector<int>& nums, int cur){
-        int local_diff = max(nums[cur-1], nums[cur+1]) - nums[cur];
+    long long dfs(vector<int>& nums, int pos, bool skip, vector<vector<long long>>& dp){
+        if(pos >= nums.size() - 1) return 0;
+        if(dp[skip][pos] != -1) return dp[skip][pos];
 
-        return max(0, local_diff + 1);
+        long long ans = max(0, max(nums[pos-1], nums[pos+1]) - nums[pos] + 1);
+
+        if(skip) return dp[skip][pos] = ans + dfs(nums, pos + 2, skip, dp);
+
+        dp[true][pos] = ans + dfs(nums, pos + 3, true, dp);
+        dp[false][pos] = ans + dfs(nums, pos + 2, false, dp);
+
+        return min(dp[true][pos], dp[false][pos]);
     }
 
     long long minIncrease(vector<int>& nums) {
-        // 짝수 개, 홀수 개 차이가 있음
-
-        // 1 2 3 4 5 6 (짝수)
-        // (2, 4), (2, 5), (3, 5)
-
-        // 1 2 3 4 5 6 7 (홀수)
-        // (2, 4, 6)
-
-        // 0 1 2 3 4 5 6 7
-        // (1, 3, 5), (1, 3, 6), (1, 4, 6), (2, 4, 6)
-        long long MIN;
         int N = nums.size();
-        
-        int target = (N+1)/2 - 1;
-        
-        long long sum = 0;
 
         if(N % 2){
-            for(int i = 1; i < N; i += 2){
-                int diff = find_local_diff(nums, i);
-                sum += diff;
-            }
+            long long ans = 0;
 
-            return sum;
+            for(int i = 1; i < N; i+= 2)
+                ans += max(0, max(nums[i-1], nums[i+1]) - nums[i] + 1);
+
+            return ans;
         }
 
-        long long odd_sum[100'005] = {0, };
-        long long even_sum[100'005] = {0, };
+        vector<vector<long long>> dp(2, vector<long long>(N, -1));
 
-        odd_sum[1] = find_local_diff(nums, 1);
-        for(int i = 3; i < N - 1; i+= 2)
-            odd_sum[i] = odd_sum[i-2] + find_local_diff(nums, i);
-
-        even_sum[N-2] = find_local_diff(nums, N-2);
-        for(int i = N-4; i > 0; i-= 2)
-            even_sum[i] = even_sum[i+2] + find_local_diff(nums, i);
-
-        MIN = even_sum[2];
-
-        for(int i = 1; i < N-1; i += 2){
-            long long sum = odd_sum[i] + even_sum[i+3];
-
-            MIN = min(MIN, sum);
-        }
-
-        return MIN;
+        return min(dfs(nums, 1, false, dp), dfs(nums, 2, true, dp));
     }
 };
