@@ -12,7 +12,7 @@ public:
         int left_max = nums[0];
         for(int i = 1; i < N-1; i++){
             left_max = max(left_max, nums[i-1]);
-            int& num = nums[i];
+            int num = nums[i];
 
             if(num > left_max && num < suffix[i+1]){
                 ans += 2;
@@ -22,7 +22,7 @@ public:
             if(num > nums[i-1] && num < nums[i+1])
                 ans += 1;
         }
-        
+
         return ans;
     }
 };
