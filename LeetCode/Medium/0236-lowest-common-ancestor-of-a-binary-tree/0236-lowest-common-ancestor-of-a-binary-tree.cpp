@@ -9,7 +9,7 @@
  */
 class Solution {
 public:
-    TreeNode* dfs(TreeNode* cur, TreeNode* p, TreeNode* q){
+    TreeNode* dfs(TreeNode* cur, TreeNode* &p, TreeNode* &q){
         if(!cur || cur == p || cur == q) return cur;
 
         auto l = dfs(cur->left, p ,q);
