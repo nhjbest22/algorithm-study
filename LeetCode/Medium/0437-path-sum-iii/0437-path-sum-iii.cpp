@@ -11,31 +11,29 @@
  */
 class Solution {
 public:
-    int ans;
+    int ans = 0;
+    int target;
+    unordered_map<long long, int> um;
 
-    void dfs(TreeNode* cur, vector<int>& v, int& targetSum){
+    void dfs(TreeNode* cur, long long prefixSum){
         if(!cur) return;
 
-        long long sum = 0;
+        prefixSum += cur -> val;
+        ans += um[prefixSum - target];
 
-        v.push_back(cur->val);
-        for(int i = v.size()-1; i>= 0; i--){
-            sum += v[i];
-
-            if(sum == targetSum) ans++;
-        }
-
-        dfs(cur->left, v, targetSum);
-        dfs(cur->right, v, targetSum);
-
-        v.pop_back();
+        um[prefixSum]++;
+        dfs(cur->left, prefixSum);
+        dfs(cur->right, prefixSum);
+        um[prefixSum]--;
     }
 
     int pathSum(TreeNode* root, int targetSum) {
-        ans = 0;
+        um.clear(); um[0] = 1;
+        target = targetSum;
 
-        vector<int> v;
-        dfs(root, v, targetSum);
+        
+        dfs(root, 0);
+        
         return ans;
     }
 };
