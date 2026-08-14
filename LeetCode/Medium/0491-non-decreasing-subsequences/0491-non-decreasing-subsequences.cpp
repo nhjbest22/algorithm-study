@@ -6,14 +6,14 @@ public:
         if(v.size() > 1) ans.push_back(v);
         if(idx >= nums.size()) return;
 
-        unordered_set<int> us;
+        bool used[205] = {false, };
         int prev = v.size() > 0 ? v[v.size()-1] : -101;
 
         for(int i = idx; i < nums.size(); i++){
             if(nums[i] < prev) continue;
-            if(us.find(nums[i]) != us.end()) continue;
+            if(used[nums[i] + 100]) continue;
 
-            us.insert(nums[i]);
+            used[nums[i] + 100] = true;
             v.push_back(nums[i]);
 
             backtrack(i + 1, v, nums);
