@@ -3,19 +3,19 @@
 class Solution {
 public:
     vector<pair<int, int>> adj[100'005]; // cost, nxt
+    bool visit[100'005];
     
-    void dfs(int cur, int mid, vector<bool>& visit){
+    void dfs(int cur, int mid){
         for(auto& [cost, nxt]: adj[cur]){
             if(cost <= mid) continue;
             if(visit[nxt]) continue;
 
             visit[nxt] = true;
-            dfs(nxt, mid, visit);
+            dfs(nxt, mid);
         }
     }
 
     bool check(int mid, int k, int n){
-        vector<bool> visit(n+5, false);
         int cnt = 0;
 
         for(int i = 0; i < n; i++){
@@ -23,7 +23,7 @@ public:
 
             cnt++;
             visit[i] = true;
-            dfs(i, mid, visit);
+            dfs(i, mid);
         }
 
         return cnt >= k;
@@ -41,6 +41,7 @@ public:
 
         while(yes > no + 1){
             int mid = (yes + no)/2;
+            fill(visit, visit + n, false);
 
             if(check(mid, k, n)) yes = mid;
             else no = mid;
