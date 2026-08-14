@@ -11,28 +11,20 @@
  */
 class Solution {
 public:
-    bool ans;
-
     int dfs(TreeNode* cur){
         if(!cur) return 0;
-
         
         int l = dfs(cur -> left);
-        int r = dfs(cur -> right);
-
-        // cout<<"cur: "<<cur->val<<endl;
+        if(l == -1) return -1;
         
-        // cout<<"l: "<<l<<endl;
-        // cout<<"r: "<<r<<endl;
+        int r = dfs(cur -> right);
+        if(r == -1) return -1;
 
-        if(abs(l-r) > 1) ans = false;
+        if(abs(l-r) > 1) return -1;
         return 1 + max(l, r);
     }
 
     bool isBalanced(TreeNode* root) {
-        ans = true;
-        dfs(root);
-        
-        return ans;
+        return dfs(root) != -1;
     }
 };
