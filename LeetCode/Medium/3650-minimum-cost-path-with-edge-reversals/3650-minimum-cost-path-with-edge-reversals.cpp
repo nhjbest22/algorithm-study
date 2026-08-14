@@ -3,7 +3,7 @@ public:
     vector<pair<int, int>> adj[50'005];
 
     int minCost(int n, vector<vector<int>>& edges) {
-        long long cost[n+5];
+        int cost[n+5];
 
         for(int i = 0; i < n; i++)
             adj[i].clear();
@@ -14,10 +14,10 @@ public:
             adj[v].push_back({u, 2*c});
         }
 
-        fill(cost, cost + n + 5, INT64_MAX);
+        fill(cost, cost + n + 5, INT32_MAX);
         cost[0] = 0;
         
-        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> pq;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
         pq.push({0, 0});
 
 
@@ -35,6 +35,6 @@ public:
             }
         }
 
-        return cost[n-1] == INT64_MAX ? -1 : cost[n-1];
+        return cost[n-1] == INT32_MAX ? -1 : cost[n-1];
     }
 };
