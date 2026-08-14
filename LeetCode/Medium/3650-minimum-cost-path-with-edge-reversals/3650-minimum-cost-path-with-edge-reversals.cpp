@@ -35,6 +35,6 @@ public:
             }
         }
 
-        return cost[n-1];
+        return cost[n-1] == INT64_MAX ? -1 : cost[n-1];
     }
 };
