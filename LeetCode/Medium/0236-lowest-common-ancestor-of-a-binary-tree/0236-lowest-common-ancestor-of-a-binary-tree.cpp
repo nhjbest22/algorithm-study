@@ -9,40 +9,39 @@
  */
 class Solution {
 public:
-    unordered_map<int, TreeNode*> um_par;
-    unordered_map<int, int> um_height;
+    unordered_map<TreeNode*, TreeNode*> um_par;
+    int l_h, r_h;
 
-    void dfs(TreeNode* cur, TreeNode* pre, int height){
+    void dfs(TreeNode* cur, TreeNode* pre, int height, TreeNode* p, TreeNode* q){
         if(!cur) return;
 
-        um_par[cur->val] = pre;
-        um_height[cur->val] = height;
+        um_par[cur] = pre;
 
-        dfs(cur->left, cur, height + 1);
-        dfs(cur->right, cur, height + 1);
+        if(p == cur) l_h = height;
+        if(q == cur) r_h = height;
+
+        dfs(cur->left, cur, height + 1, p, q);
+        dfs(cur->right, cur, height + 1, p, q);
     }
 
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        um_par.clear(); um_height.clear();
+        um_par.clear();
 
-        dfs(root, root, 0);
+        dfs(root, root, 0, p, q);
 
-        int l_h = um_height[p->val];
-        int r_h = um_height[q->val];
-        
         if(l_h < r_h){
             swap(p, q);
             swap(l_h, r_h);
         }
 
         while(l_h != r_h){
-            p = um_par[p->val];
+            p = um_par[p];
             l_h--;
         }
 
-        while(p -> val != q->val){
-            p = um_par[p->val];
-            q = um_par[q->val];
+        while(p != q){
+            p = um_par[p];
+            q = um_par[q];
         }
 
         return p;
