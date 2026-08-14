@@ -11,16 +11,23 @@
  */
 class Solution {
 public:
-    bool dfs(TreeNode* l, TreeNode* r){
-        if(!l && !r) return true;
-        if(!l || !r) return false;
-        
-        if(l -> val != r -> val) return false;
-
-        return dfs(l->left, r->right) && dfs(l->right, r->left);
-    }
-
     bool isSymmetric(TreeNode* root) {
-        return dfs(root -> left, root -> right);
+        queue<TreeNode*> Q;
+        Q.push(root->left);
+        Q.push(root -> right);
+
+        while(!Q.empty()){
+            auto l = Q.front(); Q.pop();
+            auto r = Q.front(); Q.pop();
+
+            if(!l && !r) continue;
+            if(!l || !r) return false;
+            if(l->val != r->val) return false;
+
+            Q.push(l->left); Q.push(r->right);
+            Q.push(l->right); Q.push(r->left);
+        }
+
+        return true;
     }
 };
