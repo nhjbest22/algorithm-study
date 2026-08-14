@@ -17,11 +17,7 @@ public:
         
         if(l -> val != r -> val) return false;
 
-        bool ret = true;
-        ret *= dfs(l->left, r->right);
-        ret *= dfs(l->right, r->left);
-
-        return ret;
+        return dfs(l->left, r->right) && dfs(l->right, r->left);
     }
 
     bool isSymmetric(TreeNode* root) {
