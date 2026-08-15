@@ -30,6 +30,8 @@ public:
         fill(p, p + N, -1);
 
         vector<tuple<int, int, int>> edges;
+        edges.reserve(N*N/2);
+
         for(int i = 0; i < N; i++){
             for(int j= i+1; j < N; j++){
                 edges.push_back({cost(points[i], points[j]), i, j});
