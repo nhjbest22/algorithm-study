@@ -38,7 +38,9 @@ public:
             }
         }
 
-        sort(edges.begin(), edges.end());
+        sort(edges.begin(), edges.end(), [](const auto& a, const auto& b){
+            return get<0>(a) < get<0>(b);
+        });
 
         int cnt = 0, ans = 0;
         for(auto& [c, u, v]: edges){
