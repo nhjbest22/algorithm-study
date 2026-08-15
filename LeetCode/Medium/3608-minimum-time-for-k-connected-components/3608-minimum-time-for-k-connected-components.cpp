@@ -1,9 +1,6 @@
-#define visit VISIT
-
 class Solution {
 public:
     int p[100'005];
-    vector<pair<int, int>> adj[100'005]; //cost, nxt
 
     int find(int x){
         if(p[x] < 0) return x;
@@ -25,14 +22,6 @@ public:
     }
 
     int minTime(int n, vector<vector<int>>& edges, int k) {
-        for(int i = 0; i < n; i++) adj[i].clear();
-
-        for(auto& e: edges){
-            int u = e[0], v = e[1], c = e[2];
-
-            adj[u].push_back({c, v});
-            adj[v].push_back({c, u});
-        }
         fill(p, p + n, -1);
         sort(edges.begin(), edges.end(), [&](const auto& a, const auto& b){
             return a[2] > b[2];
