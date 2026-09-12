@@ -7,7 +7,7 @@ public:
         int M = mat.size(), N = mat[0].size();
         vector<vector<int>> dist(M, vector<int>(N, 0));
 
-        queue<pair<int ,int>> Q;
+        queue<int> Q;
 
         for(int i=0; i < M; i++){
             for(int j=0; j< N; j++){
@@ -21,14 +21,17 @@ public:
                     if(mat[x][y] == 0 || dist[x][y]) continue;
 
                     dist[x][y] = 1;
-                    Q.push({x, y});
+                    Q.push(x*N + y);
                 }
             }
         }
 
         while(!Q.empty()){
-            auto [curX, curY] = Q.front();
+            auto cur = Q.front();
             Q.pop();
+
+            int curX = cur/N;
+            int curY = cur%N;
 
             for(int dir = 0; dir < 4; dir++){
                 int x = curX + dx[dir];
@@ -38,7 +41,7 @@ public:
                 if(mat[x][y] == 0 || dist[x][y]) continue;
 
                 dist[x][y] = dist[curX][curY] + 1;
-                Q.push({x, y});
+                Q.push(x*N + y);
             }
         }
 
