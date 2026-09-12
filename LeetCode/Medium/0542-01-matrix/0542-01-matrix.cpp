@@ -1,9 +1,9 @@
 class Solution {
 public:
-    int dx[4] = {-1, 0, 1, 0};
-    int dy[4] = {0, 1, 0, -1};
-
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int dx[4] = {-1, 0, 1, 0};
+        int dy[4] = {0, 1, 0, -1};
+
         int M = mat.size(), N = mat[0].size();
         vector<vector<int>> dist(M, vector<int>(N, 0));
 
