@@ -1,13 +1,13 @@
 class Solution {
 public:
-    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int dx[4] = {-1, 0, 1, 0};
-        int dy[4] = {0, 1, 0, -1};
+    int dx[4] = {-1, 0, 1, 0};
+    int dy[4] = {0, 1, 0, -1};
 
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
         int M = mat.size(), N = mat[0].size();
         vector<vector<int>> dist(M, vector<int>(N, 0));
 
-        queue<int> Q;
+        queue<pair<int ,int>> Q;
 
         for(int i=0; i < M; i++){
             for(int j=0; j< N; j++){
@@ -21,17 +21,14 @@ public:
                     if(mat[x][y] == 0 || dist[x][y]) continue;
 
                     dist[x][y] = 1;
-                    Q.push(x*N + y);
+                    Q.push({x, y});
                 }
             }
         }
 
         while(!Q.empty()){
-            auto cur = Q.front();
+            auto [curX, curY] = Q.front();
             Q.pop();
-
-            int curX = cur/N;
-            int curY = cur%N;
 
             for(int dir = 0; dir < 4; dir++){
                 int x = curX + dx[dir];
@@ -41,7 +38,7 @@ public:
                 if(mat[x][y] == 0 || dist[x][y]) continue;
 
                 dist[x][y] = dist[curX][curY] + 1;
-                Q.push(x*N + y);
+                Q.push({x, y});
             }
         }
 
