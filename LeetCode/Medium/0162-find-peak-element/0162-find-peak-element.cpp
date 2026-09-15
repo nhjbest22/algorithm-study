@@ -18,13 +18,8 @@ public:
             long long l = (mid > 0 ? nums[mid-1] : INT64_MIN);
             long long r = (mid < N-1 ? nums[mid+1]: INT64_MIN);
 
-            if(nums[mid] > l && nums[mid] > r){
-                yes = mid;
-                break;
-            }
-
-            if(nums[mid] > l) no = mid;
-            else yes = mid;
+            if(nums[mid] > r) yes = mid;
+            else no = mid;
         }
 
         return yes;
