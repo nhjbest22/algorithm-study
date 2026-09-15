@@ -1,25 +1,17 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        unordered_map<char, char> sTot, tTos;
+        vector<int> v1(256, -1), v2(256, -1);
 
-        for(int i = 0; i < s.size(); i++){
-            char ch1 = s[i], ch2 = t[i];
+        int N = s.size();
 
-            if(sTot.find(ch1) == sTot.end() && tTos.find(ch2) == tTos.end()){
-                sTot[ch1] = ch2;
-                tTos[ch2] = ch1;
+        for(int i = 0; i < N; i++){
+            // v1, v2 -> 각 문자들이 string에서 나온 마지막 자리수
+            if(v1[s[i]] != v2[t[i]]) return false;
 
-                continue;
-            }
-
-            if(sTot.find(ch1) != sTot.end() && tTos.find(ch2) != tTos.end()){
-                if(sTot[ch1] == ch2 && tTos[ch2] == ch1) continue;
-            }
-
-            return false;
+            v1[s[i]] = v2[t[i]] = i;
         }
-
+        
         return true;
     }
 };
