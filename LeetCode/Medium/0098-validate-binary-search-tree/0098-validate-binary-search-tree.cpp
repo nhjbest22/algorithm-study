@@ -14,11 +14,14 @@ public:
 
     // r 보다 작으면서, l 보다는 커야함
     bool dfs(TreeNode *cur, long long l, long long r){
-        if(!cur) return true;
-
         if(l >= cur->val || r <= cur->val) return false;
 
-        return dfs(cur->left, l, cur->val) && dfs(cur->right, cur->val, r);
+        bool ret = true;
+
+        if(cur->left) ret *= dfs(cur->left, l, cur->val);
+        if(cur->right) ret *= dfs(cur->right, cur->val, r);
+
+        return ret;
     }
 
     bool isValidBST(TreeNode* root) {
