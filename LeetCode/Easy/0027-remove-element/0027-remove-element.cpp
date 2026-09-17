@@ -4,10 +4,8 @@ public:
         int N = nums.size();
 
         int idx = 0;
-        for(int i = 0; i < N; i++){
-            if(nums[i] == val) continue;
-
-            nums[idx++] = nums[i];
+        for(int x: nums){
+            if(x != val) nums[idx++] = x;
         }
 
         return idx;
